@@ -1,4 +1,4 @@
-name: Java CI v2
+name: Java CI v3 Packaging
 
 on: 
   pull_request:
@@ -15,5 +15,11 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots verify
+      - run: |
+         mvn --batch-mode --update-snapshots verify
+         mkdir staging && cp target/*.jar staging
+      - name: Package and upload artifact  
+        uses: actions/upload-artifact@v2
+        with:
+          name: Package
+          path: staging
