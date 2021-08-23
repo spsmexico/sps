@@ -18,12 +18,40 @@ jobs:
       - run: |
          mvn --batch-mode --update-snapshots verify
          mkdir staging && cp target/*.jar staging
+
       - name: Package and upload artifact  
         uses: actions/upload-artifact@v2
         with:
           name: Package
           path: staging
+
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }} # GITHUB_TOKEN is the default env for the password
+
+      - name: Realizando despliegue por SSH
+        uses: appleboy/scp-action@master
+        with:       
+          host: ${{ secrets.SERVER_IP_ADDRESS }}        
+          username: ${{ secrets.SERVER_USERNAME }}      
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          source: staging/       
+          target: "~/"
+      
+          #     - name: Start Service
+          #        uses: appleboy/ssh-action@master
+          #        with:
+          #          host: ${{ secrets.API_IP_ADDRESS }}       
+          #          username: ${{ secrets.API_USERNAME }}     
+          #          key: ${{ secrets.AWS_SSH_KEY }}
+          #          port: 22
+          #          script: |
+          #            sudo /etc/init.d/my-app stop
+          #            mv ~/source/my-app.jar ~/source/my-app-old.jar
+          #            mv ~/source/my-app-latest.jar ~/source/my-app.jar
+          #            sudo rm -rf /etc/init.d/my-app
+          #            sudo ln -s -f ~/source/my-app.jar /etc/init.d/my-app
+          #            sudo /etc/init.d/my-app start
+          #            rm ~/source/my-app-old.jar                
