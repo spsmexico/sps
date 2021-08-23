@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:  
       - main
+env: 
+   MAVEN_OPTS: "-Dmaven.repo.local=${{ github.workspace }}/sps"
 
 jobs:
   build:
@@ -39,7 +41,14 @@ jobs:
           port: 22
           source: staging/       
           target: "~/"
-      
+       
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: "${{ github.workspace }}/sps"
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-       
           #     - name: Start Service
           #        uses: appleboy/ssh-action@master
           #        with:
