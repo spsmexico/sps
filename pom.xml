@@ -13,7 +13,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>unit-vs-int</name>
 	<description>Demo project for Spring Boot</description>
-
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>Github SPS Practica CI/CD</name>
+			<url>https://maven.pkg.github.com/carlosbrunoe/sps</url>
+		</repository>
+	</distributionManagement>	
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
