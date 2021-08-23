@@ -23,3 +23,7 @@ jobs:
         with:
           name: Package
           path: staging
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }} # GITHUB_TOKEN is the default env for the password
