@@ -8,3 +8,7 @@ La llave SSH se debería guardar en los "secrets" del repositorio.
 
 2. ¿En qué ayudaría utilizar la acción de cache?
 
+En aumentar la velocidad de nuestro workflow.
+Debido a que no se tendrían que descargar las mismas dependencias cada que
+se compile nuestra aplicación.
+=======
