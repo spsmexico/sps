@@ -18,7 +18,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - run: |
-         mvnw --batch-mode --update-snapshots verify
+         mvn --batch-mode verify
          mkdir staging && cp target/*.jar staging
 
       - name: Package and upload artifact  
